@@ -1,0 +1,1 @@
+﻿.NET MAUI Resolved Core
