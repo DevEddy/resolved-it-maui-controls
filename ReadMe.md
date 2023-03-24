@@ -79,6 +79,7 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 ## Roadmap
 - Support for entry types *Editor*, *Picker* and *DatePicker*
 - Icons support for password toggle button
+- Nuget package
 
 ## Screenshots
 <img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/android_screenshot.png" alt="Resolved IT + MAUI Logo" width=300 />
