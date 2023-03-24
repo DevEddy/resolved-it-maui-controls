@@ -191,9 +191,8 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
             new() { Height = GridLength.Auto }
         };
 
-        Margin = DeviceInfo.Platform == DevicePlatform.MacCatalyst
-            ? new Thickness(0, 6)
-            : new Thickness(0, 4);
+        Margin = 0;
+        Padding = 0;
 
         _entryFrame.Padding = DeviceInfo.Platform == DevicePlatform.WinUI
             ? new Thickness(0, 0, 0, 0)
@@ -220,11 +219,14 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
         _placeholderLabel.HorizontalOptions = LayoutOptions.Start;
         _placeholderLabel.VerticalOptions = LayoutOptions.Center;
         _placeholderLabel.SetBinding(Label.BackgroundColorProperty, new Binding(nameof(PlaceholderBackgroundColor), source: this));
-        
+
         _errorLabel.FontSize = 11;
         _errorLabel.Margin = new Thickness(10,0);
         _errorLabel.VerticalOptions = LayoutOptions.Start;
         _errorLabel.VerticalTextAlignment = TextAlignment.Center;
+        _errorLabel.SetBinding(Label.TextProperty, new Binding(nameof(ErrorText), source: this));
+        _errorLabel.SetBinding(Label.IsVisibleProperty, new Binding(nameof(HasError), source: this));
+        _errorLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(_placeholderLabel.TextColor), source: _placeholderLabel));
     }
 
     private void PasswordToggleImageTapGestureOnTapped(object? sender, TappedEventArgs? e)
