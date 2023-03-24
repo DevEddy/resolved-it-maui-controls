@@ -82,4 +82,4 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 - Nuget package
 
 ## Screenshots
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/android_screenshot.png" alt="Resolved IT + MAUI Logo" width=300 />
+<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_android.png" alt="Resolved IT + MAUI Logo" width=300 />
