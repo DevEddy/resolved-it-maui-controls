@@ -27,9 +27,9 @@ public static class MauiProgram
 	}
 }
 ```
+Define the Validatable value in your ViewModel as follows:
 
 ```csharp
-Define the Validatable value in your ViewModel as follows:
 
 public ValidatableValue<string> Email { get; } = new();
 
@@ -40,7 +40,7 @@ Email.Validations.Add(new EmailRule<string>
 ```
 
 Define the XAML enhanced entry as follows:
-```csharp
+```xaml
 xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolved.It.Maui.Controls"
 
 <resolvedControls:EnhancedEntry 
@@ -53,7 +53,7 @@ xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolve
 ```
 
 Style as you like it:
-```csharp
+```xaml
 <ContentPage.Resources>
     <ResourceDictionary>
         <Style TargetType="resolvedControls:EnhancedEntry">
