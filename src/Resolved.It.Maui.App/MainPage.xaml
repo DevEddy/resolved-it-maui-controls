@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Resolved.It.Maui.App"
              xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolved.It.Maui.Controls"
-             x:Class="Resolved.It.Maui.App.MainPage">
+             x:Class="Resolved.It.Maui.App.MainPage"
+             x:DataType="local:MainPageViewModel">
 
     <ScrollView>
         <VerticalStackLayout
@@ -29,17 +31,27 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
             
-            <resolvedControls:EnhancedEntry>
+            <resolvedControls:EnhancedEntry 
+                Placeholder="E-Mail"
+                ValidatableObject="{Binding Email}">
                 <resolvedControls:EnhancedEntry.MainContent>
-                    <Entry Placeholder="Enter your text here..." />
+                    <Entry Text="{Binding Email.Value}" Keyboard="Email" IsSpellCheckEnabled="False" />
+                </resolvedControls:EnhancedEntry.MainContent>
+            </resolvedControls:EnhancedEntry>
+            
+            <resolvedControls:EnhancedEntry 
+                Placeholder="Password"
+                ValidatableObject="{Binding Password}"
+                EnablePasswordToggle="True"
+                IsPassword="True">
+                <resolvedControls:EnhancedEntry.MainContent>
+                    <Entry Text="{Binding Password.Value}" />
                 </resolvedControls:EnhancedEntry.MainContent>
             </resolvedControls:EnhancedEntry>
 
             <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                Text="Login"
+                SemanticProperties.Hint="Validated the text entered in the text box and logs the user in"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
