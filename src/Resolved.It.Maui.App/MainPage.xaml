@@ -6,6 +6,22 @@
              x:Class="Resolved.It.Maui.App.MainPage"
              x:DataType="local:MainPageViewModel">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="resolvedControls:EnhancedEntry">
+                <Setter Property="OutlineColor" 
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FocusedOutlineColor" 
+                        Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+                <Setter Property="PlaceholderColor" 
+                        Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                <Setter Property="PlaceholderFocusedColor" 
+                        Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                <Setter Property="PlaceholderBackgroundColor" 
+                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"

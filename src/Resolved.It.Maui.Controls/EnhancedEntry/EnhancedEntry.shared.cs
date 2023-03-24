@@ -4,21 +4,21 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
-using Resolved.It.Maui.Core.Interfaces;
 using Resolved.It.Maui.Core.Validations;
 
 // ReSharper disable once CheckNamespace
 namespace Resolved.It.Maui.Controls;
 
-public partial class EnhancedEntry : Grid, IEnhancedEntry
+public partial class EnhancedEntry : Grid
 {
     #region Bindable Properties
 
     public static readonly BindableProperty MainContentProperty = BindableProperty.Create(
         nameof (MainContent), 
         typeof (View), 
-        typeof (IEnhancedEntry), 
+        typeof (EnhancedEntry), 
         propertyChanged: OnContentPropertyChanged);
+        
     private static void OnContentPropertyChanged(
         BindableObject bindable,
         object oldValue,
@@ -30,14 +30,14 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
         enhancedEntry.OnMainContentChanged(oldValue, newValue);
     }
     
-    private static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
+    public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
         propertyName: nameof(IsPassword),
         returnType: typeof(bool),
         declaringType: typeof(EnhancedEntry),
         defaultValue: false,
         defaultBindingMode: BindingMode.TwoWay);
     
-    private static readonly BindableProperty EnablePasswordToggleProperty = BindableProperty.Create(
+    public static readonly BindableProperty EnablePasswordToggleProperty = BindableProperty.Create(
         propertyName: nameof(EnablePasswordToggle),
         returnType: typeof(bool),
         declaringType: typeof(EnhancedEntry),
@@ -45,39 +45,53 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
         defaultBindingMode: BindingMode.TwoWay);
 
     
-    private static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
+    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
         propertyName: nameof(Placeholder),
         returnType: typeof(string),
         declaringType: typeof(EnhancedEntry),
         defaultValue: null,
         defaultBindingMode: BindingMode.TwoWay);
     
-    private static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
+    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
         propertyName: nameof(PlaceholderColor),
         returnType: typeof(Color),
         declaringType: typeof(EnhancedEntry),
         defaultValue: Colors.Gray,
         defaultBindingMode: BindingMode.TwoWay);
     
-    private static readonly BindableProperty PlaceholderFocusedColorProperty = BindableProperty.Create(
+    public static readonly BindableProperty PlaceholderFocusedColorProperty = BindableProperty.Create(
         propertyName: nameof(PlaceholderFocusedColor),
         returnType: typeof(Color),
         declaringType: typeof(EnhancedEntry),
         defaultValue: Colors.Black,
         defaultBindingMode: BindingMode.TwoWay);
     
-    private static readonly BindableProperty PlaceholderBackgroundColorProperty = BindableProperty.Create(
+    public static readonly BindableProperty PlaceholderBackgroundColorProperty = BindableProperty.Create(
         propertyName: nameof(PlaceholderBackgroundColor),
         returnType: typeof(Color),
         declaringType: typeof(EnhancedEntry),
         defaultValue: Colors.White,
         defaultBindingMode: BindingMode.TwoWay);
     
-    private static readonly BindableProperty PlaceholderErrorColorProperty = BindableProperty.Create(
+    public static readonly BindableProperty PlaceholderErrorColorProperty = BindableProperty.Create(
         propertyName: nameof(PlaceholderErrorColor),
         returnType: typeof(Color),
         declaringType: typeof(EnhancedEntry),
         defaultValue: Colors.OrangeRed,
+        defaultBindingMode: BindingMode.TwoWay);
+    
+    public static readonly BindableProperty OutlineColorProperty = BindableProperty.Create(
+        propertyName: nameof(OutlineColor),
+        returnType: typeof(Color),
+        declaringType: typeof(EnhancedEntry),
+        defaultValue: Colors.Black,
+        defaultBindingMode: BindingMode.TwoWay);
+    
+    public static readonly BindableProperty FocusedOutlineColorProperty = BindableProperty.Create(
+        propertyName: nameof(FocusedOutlineColor),
+        returnType: typeof(Color),
+        declaringType: typeof(EnhancedEntry),
+        defaultValue: Colors.Black,
         defaultBindingMode: BindingMode.TwoWay);
     
     public static readonly BindableProperty ValidatableObjectProperty = BindableProperty.Create(
@@ -86,15 +100,15 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
         declaringType: typeof(EnhancedEntry),
         defaultValue: null,
         defaultBindingMode: BindingMode.TwoWay);
-    
-    public static readonly BindableProperty ErrorTextProperty = BindableProperty.Create(
+
+    private static readonly BindableProperty ErrorTextProperty = BindableProperty.Create(
         propertyName: nameof(ErrorText),
         returnType: typeof(string),
         declaringType: typeof(EnhancedEntry),
         defaultValue: null,
         defaultBindingMode: BindingMode.TwoWay);
-    
-    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(
+
+    private static readonly BindableProperty HasErrorProperty = BindableProperty.Create(
         propertyName: nameof(HasError),
         returnType: typeof(bool),
         declaringType: typeof(EnhancedEntry),
@@ -147,12 +161,24 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
     {
         get => (Color)GetValue(PlaceholderBackgroundColorProperty);
         set => SetValue(PlaceholderBackgroundColorProperty, value);
-    }
+    }    
 
     public Color PlaceholderErrorColor
     {
         get => (Color)GetValue(PlaceholderErrorColorProperty);
         set => SetValue(PlaceholderErrorColorProperty, value);
+    } 
+
+    public Color OutlineColor
+    {
+        get => (Color)GetValue(OutlineColorProperty);
+        set => SetValue(OutlineColorProperty, value);
+    }
+    
+    public Color FocusedOutlineColor
+    {
+        get => (Color)GetValue(FocusedOutlineColorProperty);
+        set => SetValue(FocusedOutlineColorProperty, value);
     }
     
     public string ErrorText
@@ -198,7 +224,7 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
             ? new Thickness(0, 0, 0, 0)
             : new Thickness(10,0);
 
-        _entryFrame.SetBinding(Microsoft.Maui.Controls.Frame.BorderColorProperty, new Binding(nameof(_placeholderLabel.TextColor), source: _placeholderLabel));
+        _entryFrame.SetBinding(Microsoft.Maui.Controls.Frame.BorderColorProperty, new Binding(nameof(OutlineColor), source: this));
 
         _entryFrameContent.ColumnDefinitions = new ColumnDefinitionCollection()
         {
@@ -219,13 +245,14 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
         _placeholderLabel.HorizontalOptions = LayoutOptions.Start;
         _placeholderLabel.VerticalOptions = LayoutOptions.Center;
         _placeholderLabel.SetBinding(Label.BackgroundColorProperty, new Binding(nameof(PlaceholderBackgroundColor), source: this));
+        _placeholderLabel.SetBinding(Label.TextProperty, new Binding(nameof(PlaceholderColor), source: this));
 
         _errorLabel.FontSize = 11;
         _errorLabel.Margin = new Thickness(10,0);
         _errorLabel.VerticalOptions = LayoutOptions.Start;
         _errorLabel.VerticalTextAlignment = TextAlignment.Center;
         _errorLabel.SetBinding(Label.TextProperty, new Binding(nameof(ErrorText), source: this));
-        _errorLabel.SetBinding(Label.IsVisibleProperty, new Binding(nameof(HasError), source: this));
+        _errorLabel.SetBinding(IsVisibleProperty, new Binding(nameof(HasError), source: this));
         _errorLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(_placeholderLabel.TextColor), source: _placeholderLabel));
     }
 
@@ -233,6 +260,8 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
     {
         IsPassword = !IsPassword;
         _passwordToggleImage.BackgroundColor = IsPassword ? Colors.Green : Colors.Red;
+
+        _mainEntryControl?.Focus();
     }
 
     private void SetupView()
@@ -340,13 +369,23 @@ public partial class EnhancedEntry : Grid, IEnhancedEntry
     private void UpdateControlsState(bool isFocused)
     {
         var hasValue = !string.IsNullOrWhiteSpace(ValidatableObject?.StringValue);
-        
-        if(isFocused && !HasError)
-            _placeholderLabel.TextColor = PlaceholderFocusedColor;
-        
-        if(HasError)
+
+        if (HasError)
+        {
             _placeholderLabel.TextColor = PlaceholderErrorColor;
-        
+            _entryFrame.BorderColor = PlaceholderErrorColor;
+        }
+        else if (isFocused)
+        {
+            _placeholderLabel.TextColor = PlaceholderFocusedColor;
+            _entryFrame.BorderColor = FocusedOutlineColor;
+        }
+        else
+        {
+            _placeholderLabel.TextColor = PlaceholderColor;
+            _entryFrame.BorderColor = OutlineColor;
+        }
+
         _placeholderLabel.FontSize = GetPlaceholderFontSize();
         _placeholderLabel.TranslateTo(0, GetPlaceholderYTranslation(), 80, easing: Easing.Linear);
         
