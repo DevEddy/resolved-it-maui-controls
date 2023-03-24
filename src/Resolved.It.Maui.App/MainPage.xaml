@@ -52,7 +52,8 @@
             <Button
                 Text="Login"
                 SemanticProperties.Hint="Validated the text entered in the text box and logs the user in"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Fill"
+                Command="{Binding SignInCommand}"/>
 
         </VerticalStackLayout>
     </ScrollView>
