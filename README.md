@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/meduardschaefer/Resolved%20IT%20-%20MAUI%20Controls/_apis/build/status/DevEddy.resolved-it-maui-controls?branchName=main)](https://dev.azure.com/meduardschaefer/Resolved%20IT%20-%20MAUI%20Controls/_build/latest?definitionId=3&branchName=main) [![NuGet](https://buildstats.info/nuget/Resolved.It.Maui.Controls?includePreReleases=true)](https://www.nuget.org/packages/Resolved.It.Maui.Controls/)
 
-# Resolved IT - MAUI Controls
+# Resolved IT - .NET MAUI Controls
 Fully customizable and validatable controls for MAUI.
 
 ## Getting Started
