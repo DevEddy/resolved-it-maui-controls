@@ -50,7 +50,7 @@ jobs:
           Write-Host("Branch = $buildSourceBranch, Version = $tagVersion");
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$tagVersion")
         displayName: Set NuGet Version to Tag Number
-        condition: and(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))) # Only run this step when a Tag has triggered the CI Pipeline
+        condition: and(startsWith(variables['Build.SourceBranch'], 'refs/tags/')) # Only run this step when a Tag has triggered the CI Pipeline
 
       # if this is a PR build, then update the version number
       - powershell: |
