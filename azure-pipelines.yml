@@ -6,8 +6,7 @@ variables:
   RESOLVED_NET_VERSION: '7.0.200'
   LATEST_NET_VERSION: '7.0.x'
   PathToControlsCsproj: 'src/Resolved.It.Maui.Controls/Resolved.It.Maui.Controls.csproj'
-  PathToCoreCsproj: 'src/Resolved.It.Maui.Core/Resolved.It.Maui.Core.csproj'  
-  Library_Xcode_Version: '14.0.1'
+  PathToCoreCsproj: 'src/Resolved.It.Maui.Core/Resolved.It.Maui.Core.csproj'
 
 trigger:
   branches:
@@ -38,8 +37,6 @@ jobs:
       matrix:
         'Windows':
           image: 'windows-latest'
-        'macOS':
-          image: 'macos-12'
     pool:
       vmImage: $(image)
     steps:
@@ -61,13 +58,7 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$fullVersionString")
           Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
         displayName: Set NuGet Version to PR Version
-        condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest')) # Only run this step on Windows when a Pull Request has triggered the CI Pipeline
-
-      - task: CmdLine@2
-        displayName: 'Set Xcode v$(Library_Xcode_Version)'
-        condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
-        inputs:
-          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Library_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(Library_Xcode_Version).app/Contents/Developer
+        condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest')) # Only run this step when a Pull Request has triggered the CI Pipeline
 
       - task: UseDotNet@2
         displayName: Install .NET v$(RESOLVED_NET_VERSION)
@@ -103,7 +94,6 @@ jobs:
       
       # Publish build artifacts
       - task: PublishBuildArtifacts@1
-        condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish NuGets'
         inputs:
           artifactName: nuget
