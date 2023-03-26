@@ -19,6 +19,10 @@ trigger:
   paths:
     exclude:
       - README.md
+      - azure-pipelines.yml
+      - art/*
+      - build/*
+      - .idea/*
 
 pr:
   autoCancel: 'true'
