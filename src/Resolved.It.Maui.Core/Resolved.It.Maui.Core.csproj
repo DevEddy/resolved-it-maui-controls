@@ -24,9 +24,9 @@
         <Product>Resolved.It.Maui.Controls (net7.0)</Product>
         <Copyright>© Resolved IT. All rights reserved.</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/DevEddy/Resolved.It.Maui.Controls</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/DevEddy/Resolved.It.Maui.Controls</RepositoryUrl>
-        <PackageReleaseNotes>See https://github.com/DevEddy/Resolved.It.Maui.Controls/releases</PackageReleaseNotes>
+        <PackageProjectUrl>https://github.com/DevEddy/resolved-it-maui-controls</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/DevEddy/resolved-it-maui-controls</RepositoryUrl>
+        <PackageReleaseNotes>See https://github.com/DevEddy/resolved-it-maui-controls/releases</PackageReleaseNotes>
         <DefineConstants>$(DefineConstants);</DefineConstants>
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
         <Title>Resolved.It.Maui.Core</Title>
