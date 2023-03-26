@@ -78,9 +78,19 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 ## Supported input types
 - Entry
 
+## Supported platforms
+All platforms supported by .NET MAUI are supported by this library. 
+
+- Android
+- iOS
+- MacOS
+- Windows
+- Tizen: I never tried tizen and not included in the project. If anyone is interested, let me know.
+
 ## Roadmap
-- Support for entry types *Editor*, *Picker* and *DatePicker*
+- Support for entry types **Editor**, **Picker** and **DatePicker**
 - Icons support for password toggle button
+- Theme switcher for system, light and dark mode
 
 ## Screenshots
 ### Android
@@ -88,3 +98,7 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 
 ### Windows
 <img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_windows.png" alt="Resolved IT + MAUI Logo - Windows" width=300 />
+
+### iOS
+
+### MacOS
