@@ -1,0 +1,110 @@
+﻿variables:
+  CurrentSemanticVersionBase: '1.0.0'
+  PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
+  CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
+  NugetPackageVersion: '$(CurrentSemanticVersion)'
+  RESOLVED_NET_VERSION: '7.0.200'
+  LATEST_NET_VERSION: '7.0.x'
+  PathToControlsCsproj: 'src/Resolved.It.Maui.Controls/Resolved.It.Maui.Controls.csproj'
+  PathToCoreCsproj: 'src/Resolved.It.Maui.Core/Resolved.It.Maui.Core.csproj'  
+  Library_Xcode_Version: '14.0.1'
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+  tags:
+    include:
+      - '*'
+  paths:
+    exclude:
+      - README.md
+
+pr:
+  autoCancel: 'true'
+  branches:
+    include:
+      - main
+      - develop
+  paths:
+    exclude:
+      - README.md
+
+jobs:
+  - job: build_library
+    displayName: Build Library
+    strategy:
+      matrix:
+        'Windows':
+          image: 'windows-latest'
+        'macOS':
+          image: 'macos-12'
+    pool:
+      vmImage: $(image)
+    steps:
+      # if this is a tagged build for Resolved.It.Maui.Controls, then update the version number
+      - powershell: |
+          $buildSourceBranch = "$(Build.SourceBranch)"
+          $tagVersion = $buildSourceBranch.Substring($buildSourceBranch.LastIndexOf("/") + 1)
+          Write-Host("Branch = $buildSourceBranch, Version = $tagVersion");
+          Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$tagVersion")
+        displayName: Set NuGet Version to Tag Number
+        condition: and(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))) # Only run this step when a Tag has triggered the CI Pipeline
+
+      # if this is a PR build, then update the version number
+      - powershell: |
+          $prNumber = $env:System_PullRequest_PullRequestNumber
+          $commitId = "$($env:System_PullRequest_SourceCommitId)".Substring(0, 7)
+          $fullVersionString = "$(CurrentSemanticVersionBase)-build-$prNumber.$(Build.BuildId)+$commitId"
+          Write-Host("GitHub PR = $prNumber, Commit = $commitId");
+          Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$fullVersionString")
+          Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
+        displayName: Set NuGet Version to PR Version
+        condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest')) # Only run this step on Windows when a Pull Request has triggered the CI Pipeline
+
+      - task: CmdLine@2
+        displayName: 'Set Xcode v$(Library_Xcode_Version)'
+        condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
+        inputs:
+          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Library_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(Library_Xcode_Version).app/Contents/Developer
+
+      - task: UseDotNet@2
+        displayName: Install .NET v$(RESOLVED_NET_VERSION)
+        inputs:
+          packageType: 'sdk'
+          version: '$(RESOLVED_NET_VERSION)'
+
+      - task: CmdLine@2
+        displayName: 'Install .NET MAUI Workload $(RESOLVED_NET_VERSION)'
+        inputs:
+          script: dotnet workload install maui
+
+      - task: CmdLine@2
+        displayName: 'Pack Resolved.It.Maui.Core NuGet'
+        inputs:
+          script: 'dotnet pack $(PathToCoreCsproj) -c Release -p:PackageVersion=$(NugetPackageVersion)'
+
+      - task: CmdLine@2
+        displayName: 'Pack Resolved.It.Maui.Controls NuGet'
+        inputs:
+          script: 'dotnet pack $(PathToControlsCsproj) -c Release -p:PackageVersion=$(NugetPackageVersion)'
+      
+      # Copy all NuGet packages
+      - task: PowerShell@2
+        displayName: 'Copy NuGet Packages to Staging Directory'
+        inputs:
+          targetType: 'inline'
+          script: |
+            $source = ".\src"
+            $filter = "nupkg"
+            Get-ChildItem -Path $source -Recurse | Where-Object { $_.Extension -match $filter } | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)"
+          pwsh: true
+      
+      # Publish build artifacts
+      - task: PublishBuildArtifacts@1
+        condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
+        displayName: 'Publish NuGets'
+        inputs:
+          artifactName: nuget
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
