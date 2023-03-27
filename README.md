@@ -6,7 +6,7 @@
 Fully customizable and validatable controls for MAUI.
 
 ## Getting Started
-In order to use the Resolved -IT .NET MAUI Controls you need to call the extension method in your `MauiProgram.cs` file as follows:
+In order to use the Resolved - IT .NET MAUI Controls you need to call the extension method in your `MauiProgram.cs` file as follows:
 
 ```csharp
 using Resolved.It.Maui.Controls;
