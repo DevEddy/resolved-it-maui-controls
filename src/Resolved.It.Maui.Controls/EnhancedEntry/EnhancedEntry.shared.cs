@@ -19,17 +19,6 @@ public partial class EnhancedEntry : Grid
         typeof (EnhancedEntry), 
         propertyChanged: OnContentPropertyChanged);
         
-    private static void OnContentPropertyChanged(
-        BindableObject bindable,
-        object oldValue,
-        object newValue)
-    {
-        if (bindable is not EnhancedEntry enhancedEntry)
-            return;
-        
-        enhancedEntry.OnMainContentChanged(oldValue, newValue);
-    }
-    
     public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
         propertyName: nameof(IsPassword),
         returnType: typeof(bool),
@@ -44,7 +33,6 @@ public partial class EnhancedEntry : Grid
         defaultValue: false,
         defaultBindingMode: BindingMode.TwoWay);
 
-    
     public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
         propertyName: nameof(Placeholder),
         returnType: typeof(string),
@@ -286,7 +274,18 @@ public partial class EnhancedEntry : Grid
         Children.Add(_placeholderLabel);
         Children.Add(_errorLabel);
     }
-
+    
+    private static void OnContentPropertyChanged(
+        BindableObject bindable,
+        object oldValue,
+        object newValue)
+    {
+        if (bindable is not EnhancedEntry enhancedEntry)
+            return;
+        
+        enhancedEntry.OnMainContentChanged(oldValue, newValue);
+    }
+    
     private void OnMainContentChanged(object oldValue, object newValue)
     {
         if (oldValue is View oldView)
