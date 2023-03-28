@@ -13,6 +13,8 @@
                         Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
                 <Setter Property="FocusedOutlineColor" 
                         Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+                <Setter Property="PlaceholderErrorColor" 
+                        Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
                 <Setter Property="PlaceholderColor" 
                         Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
                 <Setter Property="PlaceholderFocusedColor" 
@@ -51,7 +53,7 @@
                 Placeholder="E-Mail"
                 ValidatableObject="{Binding Email}">
                 <resolvedControls:EnhancedEntry.MainContent>
-                    <Entry Text="{Binding Email.Value}" Keyboard="Email" IsSpellCheckEnabled="False" />
+                    <Entry Keyboard="Email" IsSpellCheckEnabled="False" />
                 </resolvedControls:EnhancedEntry.MainContent>
             </resolvedControls:EnhancedEntry>
             
@@ -61,7 +63,7 @@
                 EnablePasswordToggle="True"
                 IsPassword="True">
                 <resolvedControls:EnhancedEntry.MainContent>
-                    <Entry Text="{Binding Password.Value}" />
+                    <Entry />
                 </resolvedControls:EnhancedEntry.MainContent>
             </resolvedControls:EnhancedEntry>
 

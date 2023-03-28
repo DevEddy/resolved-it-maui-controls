@@ -4,6 +4,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
+using Resolved.It.Maui.Controls.Converters;
 using Resolved.It.Maui.Core.Validations;
 
 // ReSharper disable once CheckNamespace
@@ -87,7 +88,8 @@ public partial class EnhancedEntry : Grid
         returnType: typeof(IValidatableValue),
         declaringType: typeof(EnhancedEntry),
         defaultValue: null,
-        defaultBindingMode: BindingMode.TwoWay);
+        defaultBindingMode: BindingMode.TwoWay,
+        propertyChanged: ValidatableObjectChanged);
 
     private static readonly BindableProperty ErrorTextProperty = BindableProperty.Create(
         propertyName: nameof(ErrorText),
@@ -220,7 +222,6 @@ public partial class EnhancedEntry : Grid
             new() { Width = GridLength.Auto }
         };
         
-        _passwordToggleImage.BackgroundColor = IsPassword ? Colors.Green : Colors.Red;
         _passwordToggleImage.WidthRequest = 21;
         _passwordToggleImage.HeightRequest = 21;
         _passwordToggleImage.Margin = DeviceInfo.Platform == DevicePlatform.WinUI
@@ -247,8 +248,6 @@ public partial class EnhancedEntry : Grid
     private void PasswordToggleImageTapGestureOnTapped(object? sender, TappedEventArgs? e)
     {
         IsPassword = !IsPassword;
-        _passwordToggleImage.BackgroundColor = IsPassword ? Colors.Green : Colors.Red;
-
         _mainEntryControl?.Focus();
     }
 
@@ -260,10 +259,23 @@ public partial class EnhancedEntry : Grid
         Grid.SetRow(_placeholderLabel, 0);
         Grid.SetRow(_errorLabel, 1);
 
+        var passwordToggleImageSource = new FontImageSource
+        {
+            FontFamily = "MaterialIconsRegular",
+            Color = FocusedOutlineColor,
+            Size = 80,
+            FontAutoScalingEnabled = true,
+            Glyph = Core.Icons.Material.Visibility_off
+        };
+        passwordToggleImageSource.SetBinding(FontImageSource.ColorProperty, new Binding(nameof(FocusedOutlineColor), source: this));
+        passwordToggleImageSource.SetBinding(FontImageSource.GlyphProperty, new Binding(nameof(IsPassword), source: this, converter: new BoolToVisibilityGlyphConverter()));
+
         var passwordToggleImageTapGesture = new TapGestureRecognizer();
         passwordToggleImageTapGesture.Tapped += PasswordToggleImageTapGestureOnTapped;
         _passwordToggleImage.GestureRecognizers.Add(passwordToggleImageTapGesture);
         _passwordToggleImage.SetBinding(IsVisibleProperty, new Binding(nameof(EnablePasswordToggle), source: this, mode: BindingMode.TwoWay));
+        _passwordToggleImage.Source = passwordToggleImageSource;
+        
         _entryFrameContent.Children.Add(_passwordToggleImage);
         
         _entryFrame.Content = _entryFrameContent;
@@ -275,10 +287,27 @@ public partial class EnhancedEntry : Grid
         Children.Add(_errorLabel);
     }
     
-    private static void OnContentPropertyChanged(
-        BindableObject bindable,
-        object oldValue,
-        object newValue)
+    private static void ValidatableObjectChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not EnhancedEntry enhancedEntry)
+            return;
+        
+        enhancedEntry.OnValidatableObjectChanged(newValue);
+    }
+
+    private void OnValidatableObjectChanged(object newValue)
+    {
+        switch (_mainEntryControl)
+        {
+            case Entry entry:
+                entry.SetBinding(Entry.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
+                break;
+        }
+
+        Validate();
+    }
+
+    private static void OnContentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not EnhancedEntry enhancedEntry)
             return;
@@ -299,6 +328,8 @@ public partial class EnhancedEntry : Grid
                     oldEntry.TextChanged -= Handle_EntryValueChanged;
                     oldEntry.Focused -= Handle_EntryFocused;
                     oldEntry.Unfocused -= Handle_EntryUnfocused;
+                    oldEntry.RemoveBinding(Entry.IsPasswordProperty);
+                    oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
             }
             _entryFrameContent.Children.Remove(oldView);
@@ -315,9 +346,12 @@ public partial class EnhancedEntry : Grid
                 newEntry.Focused += Handle_EntryFocused;
                 newEntry.Unfocused += Handle_EntryUnfocused;
                 newEntry.RemoveBinding(Entry.PlaceholderProperty);
+                newEntry.RemoveBinding(Entry.TextProperty);
                 newEntry.Placeholder = "";
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
                 break;
+            default:
+                throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
         }
 
         _mainEntryControl.HandlerChanging += NewViewOnHandlerChanging;

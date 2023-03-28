@@ -15,7 +15,10 @@ public partial class MainPageViewModel : BasePageViewModel
     public MainPageViewModel()
     {
         AddValidations();
+
+        Email.Value = "mail@me.de";
     }
+    
     private bool IsInputValid() => IsValid;
     
     [RelayCommand(CanExecute = nameof(IsInputValid))]
@@ -53,13 +56,11 @@ public partial class MainPageViewModel : BasePageViewModel
         
         Email.OnValidated = _ =>
         {
-            Password.Validate(false);
             CheckValidation();
         };
         
         Password.OnValidated = _ =>
         {
-            Email.Validate(false);
             CheckValidation();
         };
     }

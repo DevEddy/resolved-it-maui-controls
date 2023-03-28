@@ -49,7 +49,7 @@ xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolve
     Placeholder="E-Mail"
     ValidatableObject="{Binding Email}">
     <resolvedControls:EnhancedEntry.MainContent>
-        <Entry Text="{Binding Email.Value}" Keyboard="Email" IsSpellCheckEnabled="False" />
+        <Entry Keyboard="Email" IsSpellCheckEnabled="False" />
     </resolvedControls:EnhancedEntry.MainContent>
 </resolvedControls:EnhancedEntry>
 ```
@@ -89,7 +89,6 @@ All platforms supported by .NET MAUI are supported by this library.
 
 ## Roadmap
 - Support for entry types **Editor**, **Picker** and **DatePicker**
-- Icons support for password toggle button
 - Theme switcher for system, light and dark mode
 
 ## Screenshots
