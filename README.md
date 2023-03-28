@@ -93,10 +93,10 @@ All platforms supported by .NET MAUI are supported by this library.
 
 ## Screenshots
 ### Android
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_android.png" alt="Resolved IT + MAUI Logo - Android" width=300 />
+<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_android#1.png" alt="Resolved IT + MAUI Logo - Android" width=300 />
 
 ### Windows
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_windows.png" alt="Resolved IT + MAUI Logo - Windows" width=300 />
+<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_windows#1.png" alt="Resolved IT + MAUI Logo - Windows" width=300 />
 
 ### iOS
 <img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_ios.png" alt="Resolved IT + MAUI Logo - iOS" width=300 />
