@@ -49,7 +49,7 @@ xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolve
     Placeholder="E-Mail"
     ValidatableObject="{Binding Email}">
     <resolvedControls:EnhancedEntry.MainContent>
-        <Entry Text="{Binding Email.Value}" Keyboard="Email" IsSpellCheckEnabled="False" />
+        <Entry Keyboard="Email" IsSpellCheckEnabled="False" />
     </resolvedControls:EnhancedEntry.MainContent>
 </resolvedControls:EnhancedEntry>
 ```
