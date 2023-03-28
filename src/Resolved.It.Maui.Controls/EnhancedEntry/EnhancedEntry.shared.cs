@@ -4,6 +4,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
+using Resolved.It.Maui.Controls.Converters;
 using Resolved.It.Maui.Core.Validations;
 
 // ReSharper disable once CheckNamespace
@@ -221,7 +222,6 @@ public partial class EnhancedEntry : Grid
             new() { Width = GridLength.Auto }
         };
         
-        _passwordToggleImage.BackgroundColor = IsPassword ? Colors.Green : Colors.Red;
         _passwordToggleImage.WidthRequest = 21;
         _passwordToggleImage.HeightRequest = 21;
         _passwordToggleImage.Margin = DeviceInfo.Platform == DevicePlatform.WinUI
@@ -248,8 +248,6 @@ public partial class EnhancedEntry : Grid
     private void PasswordToggleImageTapGestureOnTapped(object? sender, TappedEventArgs? e)
     {
         IsPassword = !IsPassword;
-        _passwordToggleImage.BackgroundColor = IsPassword ? Colors.Green : Colors.Red;
-
         _mainEntryControl?.Focus();
     }
 
@@ -261,10 +259,23 @@ public partial class EnhancedEntry : Grid
         Grid.SetRow(_placeholderLabel, 0);
         Grid.SetRow(_errorLabel, 1);
 
+        var passwordToggleImageSource = new FontImageSource
+        {
+            FontFamily = "MaterialIconsRegular",
+            Color = FocusedOutlineColor,
+            Size = 80,
+            FontAutoScalingEnabled = true,
+            Glyph = Core.Icons.Material.Visibility_off
+        };
+        passwordToggleImageSource.SetBinding(FontImageSource.ColorProperty, new Binding(nameof(FocusedOutlineColor), source: this));
+        passwordToggleImageSource.SetBinding(FontImageSource.GlyphProperty, new Binding(nameof(IsPassword), source: this, converter: new BoolToVisibilityGlyphConverter()));
+
         var passwordToggleImageTapGesture = new TapGestureRecognizer();
         passwordToggleImageTapGesture.Tapped += PasswordToggleImageTapGestureOnTapped;
         _passwordToggleImage.GestureRecognizers.Add(passwordToggleImageTapGesture);
         _passwordToggleImage.SetBinding(IsVisibleProperty, new Binding(nameof(EnablePasswordToggle), source: this, mode: BindingMode.TwoWay));
+        _passwordToggleImage.Source = passwordToggleImageSource;
+        
         _entryFrameContent.Children.Add(_passwordToggleImage);
         
         _entryFrame.Content = _entryFrameContent;
