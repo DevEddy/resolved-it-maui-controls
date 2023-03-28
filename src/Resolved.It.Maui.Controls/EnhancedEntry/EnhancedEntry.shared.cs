@@ -303,6 +303,8 @@ public partial class EnhancedEntry : Grid
                 entry.SetBinding(Entry.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
                 break;
         }
+
+        Validate();
     }
 
     private static void OnContentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
