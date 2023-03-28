@@ -56,13 +56,11 @@ public partial class MainPageViewModel : BasePageViewModel
         
         Email.OnValidated = _ =>
         {
-            Password.Validate(false);
             CheckValidation();
         };
         
         Password.OnValidated = _ =>
         {
-            Email.Validate(false);
             CheckValidation();
         };
     }

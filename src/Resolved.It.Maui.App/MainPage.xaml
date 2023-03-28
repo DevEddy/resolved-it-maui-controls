@@ -13,6 +13,8 @@
                         Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
                 <Setter Property="FocusedOutlineColor" 
                         Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+                <Setter Property="PlaceholderErrorColor" 
+                        Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
                 <Setter Property="PlaceholderColor" 
                         Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
                 <Setter Property="PlaceholderFocusedColor" 
