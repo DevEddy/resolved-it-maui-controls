@@ -87,7 +87,8 @@ public partial class EnhancedEntry : Grid
         returnType: typeof(IValidatableValue),
         declaringType: typeof(EnhancedEntry),
         defaultValue: null,
-        defaultBindingMode: BindingMode.TwoWay);
+        defaultBindingMode: BindingMode.TwoWay,
+        propertyChanged: ValidatableObjectChanged);
 
     private static readonly BindableProperty ErrorTextProperty = BindableProperty.Create(
         propertyName: nameof(ErrorText),
@@ -275,10 +276,25 @@ public partial class EnhancedEntry : Grid
         Children.Add(_errorLabel);
     }
     
-    private static void OnContentPropertyChanged(
-        BindableObject bindable,
-        object oldValue,
-        object newValue)
+    private static void ValidatableObjectChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not EnhancedEntry enhancedEntry)
+            return;
+        
+        enhancedEntry.OnValidatableObjectChanged(newValue);
+    }
+
+    private void OnValidatableObjectChanged(object newValue)
+    {
+        switch (_mainEntryControl)
+        {
+            case Entry entry:
+                entry.SetBinding(Entry.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
+                break;
+        }
+    }
+
+    private static void OnContentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not EnhancedEntry enhancedEntry)
             return;
@@ -299,6 +315,8 @@ public partial class EnhancedEntry : Grid
                     oldEntry.TextChanged -= Handle_EntryValueChanged;
                     oldEntry.Focused -= Handle_EntryFocused;
                     oldEntry.Unfocused -= Handle_EntryUnfocused;
+                    oldEntry.RemoveBinding(Entry.IsPasswordProperty);
+                    oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
             }
             _entryFrameContent.Children.Remove(oldView);
@@ -315,9 +333,12 @@ public partial class EnhancedEntry : Grid
                 newEntry.Focused += Handle_EntryFocused;
                 newEntry.Unfocused += Handle_EntryUnfocused;
                 newEntry.RemoveBinding(Entry.PlaceholderProperty);
+                newEntry.RemoveBinding(Entry.TextProperty);
                 newEntry.Placeholder = "";
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
                 break;
+            default:
+                throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
         }
 
         _mainEntryControl.HandlerChanging += NewViewOnHandlerChanging;

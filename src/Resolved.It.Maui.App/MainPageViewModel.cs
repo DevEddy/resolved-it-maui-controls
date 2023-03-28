@@ -15,7 +15,10 @@ public partial class MainPageViewModel : BasePageViewModel
     public MainPageViewModel()
     {
         AddValidations();
+
+        Email.Value = "mail@me.de";
     }
+    
     private bool IsInputValid() => IsValid;
     
     [RelayCommand(CanExecute = nameof(IsInputValid))]
