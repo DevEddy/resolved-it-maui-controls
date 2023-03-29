@@ -333,7 +333,7 @@ public partial class EnhancedEntry : Grid
                     oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
                 case Picker oldPicker:
-                    oldPicker.SelectedIndexChanged -= Handle_EntrySelectedIndexChanged;
+                    oldPicker.SelectedIndexChanged -= Handle_PickerSelectedIndexChanged;
                     break;
             }
             _entryFrameContent.Children.Remove(oldView);
@@ -357,7 +357,7 @@ public partial class EnhancedEntry : Grid
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
                 break;
             case Picker picker:
-                picker.SelectedIndexChanged += Handle_EntrySelectedIndexChanged;
+                picker.SelectedIndexChanged += Handle_PickerSelectedIndexChanged;
                 picker.BackgroundColor = Colors.Transparent;
                 break;
             default:
@@ -373,7 +373,7 @@ public partial class EnhancedEntry : Grid
         _entryFrameContent.Children.Insert(0, _mainEntryControl);
     }
 
-    private void Handle_EntrySelectedIndexChanged(object? sender, EventArgs e)
+    private void Handle_PickerSelectedIndexChanged(object? sender, EventArgs e)
     {
         if (sender is not Picker picker)
             return;
