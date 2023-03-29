@@ -1,14 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="Resolved.It.Maui.App.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Resolved.It.Maui.App"
+    xmlns:views="clr-namespace:Resolved.It.Maui.App.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior TextOverride="" />
+    </Shell.BackButtonBehavior>
+    
+    <FlyoutItem>
+         <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="LoginPage" />
+    </FlyoutItem>
+
+    <TabBar>
+        <ShellContent Title="Start" Route="MainPage" Icon="{StaticResource HomeIconImageSource}" ContentTemplate="{DataTemplate views:MainPage}" />
+        <ShellContent Title="Einstellungen" Route="SettingsPage" Icon="{StaticResource SettingsIconImageSource}" ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </TabBar>
+
 
 </Shell>

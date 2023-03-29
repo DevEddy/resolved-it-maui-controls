@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Resolved.It.Maui.App.Services;
 
-namespace Resolved.It.Maui.App;
+namespace Resolved.It.Maui.App.ViewModels;
 
 public class BasePageViewModel : ObservableObject
 {
@@ -11,6 +12,13 @@ public class BasePageViewModel : ObservableObject
     {
         get => _isBusy;
         private set => SetProperty(ref _isBusy, value);
+    }
+
+    public INavigationService NavigationService { get; }
+
+    public BasePageViewModel(INavigationService navigationService)
+    {
+        NavigationService = navigationService;
     }
     
     protected async Task IsBusyFor(Func<Task> unitOfWork)

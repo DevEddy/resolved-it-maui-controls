@@ -8,6 +8,11 @@ public static class AppBuilderExtensions
 {
     public static MauiAppBuilder UseResolvedItMauiControls(this MauiAppBuilder builder, Action<Options>? options = default)
     {
+        builder.ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIconsRegular");
+        });
+
         // Pass `null` because `options?.Invoke()` will set options on both `Resolved.It.Maui.Controls` and `Resolved.It.Maui.Core`
         builder.UseResolvedItMauiCore();
 

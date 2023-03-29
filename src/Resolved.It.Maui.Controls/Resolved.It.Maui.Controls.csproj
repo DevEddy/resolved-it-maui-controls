@@ -43,6 +43,9 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+      <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
     <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net7.0-ios')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true ">
         <Compile Remove="**\**\*.ios.cs" />
         <None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
@@ -81,6 +84,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+      <None Remove="Resources\" />
+      <None Remove="Icons\" />
+    </ItemGroup>
+    <ItemGroup>
         <None Include="..\..\build\nuget.png" PackagePath="icon.png" Pack="true" />
         <None Include="README.md" pack="true" PackagePath="." />
     </ItemGroup>
@@ -89,4 +97,14 @@
       <ProjectReference Include="..\Resolved.It.Maui.Core\Resolved.It.Maui.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+      <MauiFont Include="Resources\Fonts\MaterialIcons-Regular.ttf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </MauiFont>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Icons\" />
+    </ItemGroup>
 </Project>

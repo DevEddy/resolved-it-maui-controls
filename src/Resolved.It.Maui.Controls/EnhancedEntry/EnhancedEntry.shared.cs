@@ -15,9 +15,9 @@ public partial class EnhancedEntry : Grid
     #region Bindable Properties
 
     public static readonly BindableProperty MainContentProperty = BindableProperty.Create(
-        nameof (MainContent), 
-        typeof (View), 
-        typeof (EnhancedEntry), 
+        propertyName: nameof (MainContent),
+        returnType: typeof(View),
+        declaringType: typeof(EnhancedEntry), 
         propertyChanged: OnContentPropertyChanged);
         
     public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
@@ -210,6 +210,7 @@ public partial class EnhancedEntry : Grid
         Margin = 0;
         Padding = 0;
 
+        _entryFrame.BackgroundColor = Colors.Transparent;
         _entryFrame.Padding = DeviceInfo.Platform == DevicePlatform.WinUI
             ? new Thickness(0, 0, 0, 0)
             : new Thickness(10,0);
@@ -265,7 +266,7 @@ public partial class EnhancedEntry : Grid
             Color = FocusedOutlineColor,
             Size = 80,
             FontAutoScalingEnabled = true,
-            Glyph = Core.Icons.Material.Visibility_off
+            Glyph = Icons.Material.Visibility_off
         };
         passwordToggleImageSource.SetBinding(FontImageSource.ColorProperty, new Binding(nameof(FocusedOutlineColor), source: this));
         passwordToggleImageSource.SetBinding(FontImageSource.GlyphProperty, new Binding(nameof(IsPassword), source: this, converter: new BoolToVisibilityGlyphConverter()));
@@ -331,6 +332,9 @@ public partial class EnhancedEntry : Grid
                     oldEntry.RemoveBinding(Entry.IsPasswordProperty);
                     oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
+                case Picker oldPicker:
+                    oldPicker.SelectedIndexChanged -= Handle_PickerSelectedIndexChanged;
+                    break;
             }
             _entryFrameContent.Children.Remove(oldView);
         }
@@ -347,8 +351,14 @@ public partial class EnhancedEntry : Grid
                 newEntry.Unfocused += Handle_EntryUnfocused;
                 newEntry.RemoveBinding(Entry.PlaceholderProperty);
                 newEntry.RemoveBinding(Entry.TextProperty);
+                newEntry.RemoveBinding(Entry.BackgroundColorProperty);
                 newEntry.Placeholder = "";
+                newEntry.BackgroundColor = Colors.Transparent;
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
+                break;
+            case Picker picker:
+                picker.SelectedIndexChanged += Handle_PickerSelectedIndexChanged;
+                picker.BackgroundColor = Colors.Transparent;
                 break;
             default:
                 throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
@@ -361,6 +371,24 @@ public partial class EnhancedEntry : Grid
         _mainEntryControl.HeightRequest = 44;
         
         _entryFrameContent.Children.Insert(0, _mainEntryControl);
+    }
+
+    private void Handle_PickerSelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (sender is not Picker picker)
+            return;
+
+        var selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex == -1) 
+            return;
+
+        if (picker.ItemsSource[selectedIndex] is not { } obj) 
+            return;
+        
+        ValidatableObject?.SetValue(obj);
+        Validate();
+
     }
 
     private void Handle_EntryUnfocused(object? sender, FocusEventArgs e)

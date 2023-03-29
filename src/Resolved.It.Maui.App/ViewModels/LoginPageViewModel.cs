@@ -1,19 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Resolved.It.Maui.App.Services;
+using Resolved.It.Maui.App.Views;
 using Resolved.It.Maui.Core.Validations;
 using Resolved.It.Maui.Core.Validations.Rules;
 
-namespace Resolved.It.Maui.App;
+namespace Resolved.It.Maui.App.ViewModels;
 
-public partial class MainPageViewModel : BasePageViewModel
+public partial class LoginPageViewModel : BasePageViewModel
 {    
     [ObservableProperty]
     private bool _isValid;
     public ValidatableValue<string> Email { get; } = new();
     public ValidatableValue<string> Password { get; } = new();
 
-    public MainPageViewModel()
+    private readonly ISettingsService _settingsService;
+
+    public LoginPageViewModel(
+        INavigationService navigationService,
+        ISettingsService settingsService)
+        : base(navigationService)
     {
+        _settingsService = settingsService;
+
         AddValidations();
 
         Email.Value = "mail@me.de";
@@ -27,8 +36,10 @@ public partial class MainPageViewModel : BasePageViewModel
         await IsBusyFor(
             async () =>
             {
-                await Task.Delay(10);
-                IsValid = true;
+                await Task.Delay(2000);
+                _settingsService.AuthAccessToken = "MOCK";
+
+                await NavigationService.NavigateToAsync($"//{nameof(MainPage)}");
             });
     }
     

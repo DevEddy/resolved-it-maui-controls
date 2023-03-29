@@ -76,7 +76,7 @@ Style as you like it:
 See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/tree/main/src/Resolved.It.Maui.App) as an example.
 
 ## Supported input types
-- Entry
+- Entry, Picker
 
 ## Supported platforms
 All platforms supported by .NET MAUI are supported by this library. 
@@ -88,19 +88,19 @@ All platforms supported by .NET MAUI are supported by this library.
 - Tizen: I never tried tizen and not included in the project. If anyone is interested, let me know.
 
 ## Roadmap
-- Support for entry types **Editor**, **Picker** and **DatePicker**
+- Support for entry types **Editor** and **DatePicker**
 - Theme switcher for system, light and dark mode
 
 ## Screenshots
 ### Android
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_android.png" alt="Resolved IT + MAUI Logo - Android" width=300 />
+<img src="art/screenshot_android.png#1" alt="Resolved IT + MAUI Logo - Android" width=300 />
 
 ### Windows
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_windows.png" alt="Resolved IT + MAUI Logo - Windows" width=300 />
+<img src="art/screenshot_windows.png#1" alt="Resolved IT + MAUI Logo - Windows" width=300 />
 
 ### iOS
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_ios.png" alt="Resolved IT + MAUI Logo - iOS" width=300 />
+<img src="art/screenshot_ios.png#2" alt="Resolved IT + MAUI Logo - iOS" width=300 />
 
 ### MacOS
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_macos.png" alt="Resolved IT + MAUI Logo - MacOS" width=300 />
+<img src="art/screenshot_macos.png#2" alt="Resolved IT + MAUI Logo - MacOS" width=300 />
 
