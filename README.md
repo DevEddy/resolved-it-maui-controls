@@ -76,7 +76,7 @@ Style as you like it:
 See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/tree/main/src/Resolved.It.Maui.App) as an example.
 
 ## Supported input types
-- Entry
+- Entry, Picker
 
 ## Supported platforms
 All platforms supported by .NET MAUI are supported by this library. 
@@ -88,7 +88,7 @@ All platforms supported by .NET MAUI are supported by this library.
 - Tizen: I never tried tizen and not included in the project. If anyone is interested, let me know.
 
 ## Roadmap
-- Support for entry types **Editor**, **Picker** and **DatePicker**
+- Support for entry types **Editor** and **DatePicker**
 - Theme switcher for system, light and dark mode
 
 ## Screenshots
