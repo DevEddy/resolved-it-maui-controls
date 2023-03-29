@@ -15,9 +15,9 @@ public partial class EnhancedEntry : Grid
     #region Bindable Properties
 
     public static readonly BindableProperty MainContentProperty = BindableProperty.Create(
-        nameof (MainContent), 
-        typeof (View), 
-        typeof (EnhancedEntry), 
+        propertyName: nameof (MainContent),
+        returnType: typeof(View),
+        declaringType: typeof(EnhancedEntry), 
         propertyChanged: OnContentPropertyChanged);
         
     public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
@@ -332,6 +332,9 @@ public partial class EnhancedEntry : Grid
                     oldEntry.RemoveBinding(Entry.IsPasswordProperty);
                     oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
+                case Picker oldPicker:
+                    oldPicker.SelectedIndexChanged -= Handle_EntrySelectedIndexChanged;
+                    break;
             }
             _entryFrameContent.Children.Remove(oldView);
         }
@@ -353,6 +356,10 @@ public partial class EnhancedEntry : Grid
                 newEntry.BackgroundColor = Colors.Transparent;
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
                 break;
+            case Picker picker:
+                picker.SelectedIndexChanged += Handle_EntrySelectedIndexChanged;
+                picker.BackgroundColor = Colors.Transparent;
+                break;
             default:
                 throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
         }
@@ -364,6 +371,24 @@ public partial class EnhancedEntry : Grid
         _mainEntryControl.HeightRequest = 44;
         
         _entryFrameContent.Children.Insert(0, _mainEntryControl);
+    }
+
+    private void Handle_EntrySelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (sender is not Picker picker)
+            return;
+
+        var selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex != -1)
+        {
+            if (picker.ItemsSource[selectedIndex] is { } obj)
+            {
+                ValidatableObject?.SetValue(obj);
+                Validate();
+            }
+        }
+
     }
 
     private void Handle_EntryUnfocused(object? sender, FocusEventArgs e)

@@ -14,5 +14,18 @@
                 <Entry Keyboard="Text" />
             </resolvedControls:EnhancedEntry.MainContent>
         </resolvedControls:EnhancedEntry>
+
+        <resolvedControls:EnhancedEntry 
+            Placeholder="Country"
+            ValidatableObject="{Binding SelectedCountry}">
+            <resolvedControls:EnhancedEntry.MainContent>
+                 <Picker
+                    SelectedItem="{Binding SelectedCountry.Value}"
+                    ItemsSource="{Binding Countries}" 
+                    ItemDisplayBinding="{Binding Name}" />
+            </resolvedControls:EnhancedEntry.MainContent>
+        </resolvedControls:EnhancedEntry>
+
+
     </VerticalStackLayout>
 </ContentPage>
