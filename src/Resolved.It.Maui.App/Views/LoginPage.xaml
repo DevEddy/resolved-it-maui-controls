@@ -1,29 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Resolved.It.Maui.App"
+             xmlns:viewModels="clr-namespace:Resolved.It.Maui.App.ViewModels"
              xmlns:resolvedControls="clr-namespace:Resolved.It.Maui.Controls;assembly=Resolved.It.Maui.Controls"
-             x:Class="Resolved.It.Maui.App.MainPage"
-             x:DataType="local:MainPageViewModel">
+             x:Class="Resolved.It.Maui.App.Views.LoginPage"
+             x:DataType="viewModels:LoginPageViewModel">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="resolvedControls:EnhancedEntry">
-                <Setter Property="OutlineColor" 
-                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                <Setter Property="FocusedOutlineColor" 
-                        Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
-                <Setter Property="PlaceholderErrorColor" 
-                        Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
-                <Setter Property="PlaceholderColor" 
-                        Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
-                <Setter Property="PlaceholderFocusedColor" 
-                        Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
-                <Setter Property="PlaceholderBackgroundColor" 
-                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"

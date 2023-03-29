@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:Resolved.It.Maui.Controls.Icons;assembly=Resolved.It.Maui.Controls">
+
+    <x:String x:Key="MaterialIconsRegular">MaterialIconsRegular</x:String>
+    
+    <FontImageSource
+        x:Key="HomeIconImageSource"
+        FontAutoScalingEnabled="True"
+        Size="25"
+        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+        FontFamily="{StaticResource MaterialIconsRegular}"
+        Glyph="{x:Static icons:Material.Home}"/>
+
+    <FontImageSource
+        x:Key="SettingsIconImageSource"
+        FontAutoScalingEnabled="True"
+        Size="25"
+        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+        FontFamily="{StaticResource MaterialIconsRegular}"
+        Glyph="{x:Static icons:Material.Settings}"/>
+
+</ResourceDictionary>
