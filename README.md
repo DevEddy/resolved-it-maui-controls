@@ -99,8 +99,8 @@ All platforms supported by .NET MAUI are supported by this library.
 <img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_windows.png#1" alt="Resolved IT + MAUI Logo - Windows" width=300 />
 
 ### iOS
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_ios.png" alt="Resolved IT + MAUI Logo - iOS" width=300 />
+<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_ios.png#1" alt="Resolved IT + MAUI Logo - iOS" width=300 />
 
 ### MacOS
-<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_macos.png" alt="Resolved IT + MAUI Logo - MacOS" width=300 />
+<img src="https://github.com/DevEddy/resolved-it-maui-controls/blob/main/art/screenshot_macos.png#1" alt="Resolved IT + MAUI Logo - MacOS" width=300 />
 
