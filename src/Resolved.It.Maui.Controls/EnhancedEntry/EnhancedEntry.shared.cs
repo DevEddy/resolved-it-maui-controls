@@ -380,14 +380,14 @@ public partial class EnhancedEntry : Grid
 
         var selectedIndex = picker.SelectedIndex;
 
-        if (selectedIndex != -1)
-        {
-            if (picker.ItemsSource[selectedIndex] is { } obj)
-            {
-                ValidatableObject?.SetValue(obj);
-                Validate();
-            }
-        }
+        if (selectedIndex == -1) 
+            return;
+
+        if (picker.ItemsSource[selectedIndex] is not { } obj) 
+            return;
+        
+        ValidatableObject?.SetValue(obj);
+        Validate();
 
     }
 
