@@ -8,11 +8,11 @@ internal class BoolToVisibilityGlyphConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value is true ? Core.Icons.Material.Visibility : Core.Icons.Material.Visibility_off;
+        return value is true ? Icons.Material.Visibility : Icons.Material.Visibility_off;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value?.ToString() == Core.Icons.Material.Visibility;
+        return value?.ToString() == Icons.Material.Visibility;
     }
 }
