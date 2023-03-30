@@ -78,12 +78,4 @@
       <Folder Include="Models\" />
       <Folder Include="Validations\" />
     </ItemGroup>
-    <ItemGroup>
-      <MauiXaml Remove="Resources\Styles\Colors %28copy%29.xaml" />
-    </ItemGroup>
-    <ItemGroup>
-      <BundleResource Include="Resources\Styles\FontIcons.xaml" Condition=" '$(EnableDefaultXamlItems)' == 'true' ">
-        <SubType>Designer</SubType>
-      </BundleResource>
-    </ItemGroup>
 </Project>
