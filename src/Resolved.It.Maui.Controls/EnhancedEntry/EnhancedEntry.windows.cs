@@ -4,6 +4,7 @@ using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment;
 
 // ReSharper disable once CheckNamespace
 namespace Resolved.It.Maui.Controls;
@@ -53,5 +54,21 @@ public partial class EnhancedEntry
         textBox.Resources.Remove("TextControlBorderThemeThickness");
         textBox.Resources["TextControlBorderThemeThicknessFocused"] = textBox.BorderThickness;
         textBox.Resources["TextControlBorderThemeThickness"] = textBox.BorderThickness;
+    }
+
+    private static void FillWidth(IElementHandler? handler)
+    {
+        if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox comboBox)
+            return;
+
+        comboBox.HorizontalAlignment = HorizontalAlignment.Stretch;
+    }
+    
+    private static void OpenDropdown(IElementHandler? handler)
+    {
+        if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox comboBox)
+            return;
+
+        comboBox.IsDropDownOpen = true;
     }
 }

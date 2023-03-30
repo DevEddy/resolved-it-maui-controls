@@ -281,13 +281,17 @@ public partial class EnhancedEntry : Grid
         
         _entryFrame.Content = _entryFrameContent;
         
+        var placeholderTapGesture = new TapGestureRecognizer();
+        placeholderTapGesture.Tapped += PlaceholderTapGestureOnTapped;
+        _placeholderLabel.GestureRecognizers.Add(placeholderTapGesture);
+        
         _placeholderLabel.SetBinding(Label.TextProperty, new Binding(nameof(Placeholder), source: this));
         
         Children.Add(_entryFrame);
         Children.Add(_placeholderLabel);
         Children.Add(_errorLabel);
     }
-    
+
     private static void ValidatableObjectChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not EnhancedEntry enhancedEntry)
@@ -425,12 +429,20 @@ public partial class EnhancedEntry : Grid
         // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-7.0#conditional-compilation
         AddEvents(view.Handler);
         RemoveBorder(view.Handler);
+        FillWidth(view.Handler);
+    }
+
+    private void PlaceholderTapGestureOnTapped(object? sender, TappedEventArgs e)
+    {
+        _mainEntryControl?.Focus();
+        OpenDropdown(_mainEntryControl?.Handler);
+        UpdateControlsState(true);
     }
 
     private void UpdateControlsState(bool isFocused)
     {
         var hasValue = !string.IsNullOrWhiteSpace(ValidatableObject?.StringValue);
-
+        
         if (HasError)
         {
             _placeholderLabel.TextColor = PlaceholderErrorColor;
