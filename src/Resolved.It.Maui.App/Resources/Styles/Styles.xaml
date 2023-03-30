@@ -415,7 +415,7 @@
         <Setter Property="PlaceholderFocusedColor" 
                 Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
         <Setter Property="PlaceholderBackgroundColor" 
-            Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
     </Style>
 
 </ResourceDictionary>

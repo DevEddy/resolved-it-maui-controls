@@ -4,9 +4,9 @@ namespace Resolved.It.Maui.App.Views;
 
 public partial class MainPage
 {
-    public MainPage(MainPageViewModel nextPageViewModel)
+    public MainPage(MainPageViewModel mainPageViewModel)
     {
-        BindingContext = nextPageViewModel;
+        BindingContext = mainPageViewModel;
         InitializeComponent();
     }
 }

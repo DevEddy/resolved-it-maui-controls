@@ -1,9 +1,12 @@
-﻿namespace Resolved.It.Maui.App.Views;
+﻿using Resolved.It.Maui.App.ViewModels;
 
-public partial class SettingsPage : ContentPage
+namespace Resolved.It.Maui.App.Views;
+
+public partial class SettingsPage 
 {
-	public SettingsPage()
+	public SettingsPage(SettingsPageViewModel settingsPageViewModel)
 	{
+		BindingContext = settingsPageViewModel;
 		InitializeComponent();
 	}
 }

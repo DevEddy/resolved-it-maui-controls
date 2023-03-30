@@ -21,5 +21,13 @@ public partial class EnhancedEntry
     
     private static void RemoveEvents(IElementHandler? handler)
     {
+    }  
+    
+    private static void FillWidth(IElementHandler? handler)
+    {
+    }    
+    
+    private static void OpenDropdown(IElementHandler? handler)
+    {
     }
 }

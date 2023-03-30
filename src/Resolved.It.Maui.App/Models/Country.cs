@@ -30,7 +30,7 @@ public class Country
     public static Country French
         => Create(new Guid("2B08F8F1-3E3C-4B14-9C41-CB82C90BD7F5"), "Frankreich", "FR");
     public static Country Austria
-        => Create(new Guid("C5EA5E69-8E83-4E38-B946-50D1A2493A76"), "Österreich", "AT");
+        => Create(new Guid("C5EA5E69-8E83-4E38-B946-50D1A2493A76"), "Oesterreich", "AT");
 
     public static List<Country> GetCountryList()
     {
