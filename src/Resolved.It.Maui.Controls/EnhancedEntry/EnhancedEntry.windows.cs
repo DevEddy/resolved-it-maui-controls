@@ -2,8 +2,6 @@
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment;
 
 // ReSharper disable once CheckNamespace
@@ -15,45 +13,27 @@ public partial class EnhancedEntry
     {
         if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox textBox)
             return;
-        
-        textBox.FontWeight = Microsoft.UI.Text.FontWeights.Thin;
-        textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-        textBox.BorderBrush = Colors.Transparent.ToPlatform();
-        textBox.Background = Colors.Transparent.ToPlatform();
+
+        // https://stackoverflow.com/questions/73998049/net-maui-override-the-default-style-of-a-windows-view-textbox
+        textBox.Style = new Style
+        {
+            TargetType = typeof(Microsoft.UI.Xaml.Controls.TextBox),
+            Setters =
+            {
+                new Setter(Microsoft.UI.Xaml.Controls.Control.FontWeightProperty, Microsoft.UI.Text.FontWeights.Thin),
+                new Setter(Microsoft.UI.Xaml.Controls.Control.BorderThicknessProperty, new Microsoft.UI.Xaml.Thickness(0)),
+                new Setter(Microsoft.UI.Xaml.Controls.Control.BorderBrushProperty, Colors.Transparent.ToPlatform()),
+                new Setter(Microsoft.UI.Xaml.Controls.Control.BackgroundProperty, Colors.Transparent.ToPlatform())
+            }
+        };
     }
 
     private static void AddEvents(IElementHandler? handler)
     {
-        if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox textBox)
-            return;
-        
-        textBox.GettingFocus += TextBox_GettingFocus;
     }
     
     private static void RemoveEvents(IElementHandler? handler)
     {
-        if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox textBox)
-            return;
-        
-        textBox.GettingFocus -= TextBox_GettingFocus;
-    }
-
-    private static void TextBox_GettingFocus(UIElement sender, GettingFocusEventArgs args)
-    {
-        if (sender is not Microsoft.UI.Xaml.Controls.TextBox textBox)
-            return;
-        
-        textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-        textBox.BorderBrush = Colors.Transparent.ToPlatform();
-        textBox.Background = Colors.Transparent.ToPlatform();
-        textBox.FocusVisualPrimaryThickness = textBox.BorderThickness; 
-        textBox.FocusVisualSecondaryThickness = textBox.BorderThickness; 
-        textBox.SelectionHighlightColor = new SolidColorBrush(Colors.Transparent.ToWindowsColor());
-        
-        textBox.Resources.Remove("TextControlBorderThemeThicknessFocused");
-        textBox.Resources.Remove("TextControlBorderThemeThickness");
-        textBox.Resources["TextControlBorderThemeThicknessFocused"] = textBox.BorderThickness;
-        textBox.Resources["TextControlBorderThemeThickness"] = textBox.BorderThickness;
     }
 
     private static void FillWidth(IElementHandler? handler)
