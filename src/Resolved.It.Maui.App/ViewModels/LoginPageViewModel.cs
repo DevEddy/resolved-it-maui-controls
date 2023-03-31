@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Resolved.It.Maui.App.Services;
 using Resolved.It.Maui.App.Views;
+using Resolved.It.Maui.Core.Extensions;
 using Resolved.It.Maui.Core.Validations;
 using Resolved.It.Maui.Core.Validations.Rules;
 
@@ -28,6 +29,14 @@ public partial class LoginPageViewModel : BasePageViewModel
         Email.Value = "mail@me.de";
     }
     
+    public override void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        base.ApplyQueryAttributes(query);
+
+        if (query!.ValueAsBool("Logout"))
+            LogoutCommand.ExecuteAsync(null);
+    }
+    
     private bool IsInputValid() => IsValid;
     
     [RelayCommand(CanExecute = nameof(IsInputValid))]
@@ -42,7 +51,17 @@ public partial class LoginPageViewModel : BasePageViewModel
                 await NavigationService.NavigateToAsync($"//{nameof(MainPage)}");
             });
     }
-    
+
+    [RelayCommand]
+    private Task LogoutAsync()
+    {        
+        _settingsService.AuthAccessToken = string.Empty;
+        
+        Email.Value = string.Empty;
+        Password.Value = string.Empty;
+        return Task.CompletedTask;
+    }
+
     private void CheckValidation()
     {
         var isEmailValid = Email.IsValid;
