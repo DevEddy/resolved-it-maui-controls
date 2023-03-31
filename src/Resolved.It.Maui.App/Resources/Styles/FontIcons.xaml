@@ -22,5 +22,13 @@
         Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
         FontFamily="{StaticResource MaterialIconsRegular}"
         Glyph="{x:Static icons:Material.Settings}"/>
+    
+    <FontImageSource
+        x:Key="LogoutIconImageSource"
+        FontAutoScalingEnabled="True"
+        Size="25"
+        Color="{StaticResource White}"
+        FontFamily="{StaticResource MaterialIconsRegular}"
+        Glyph="{x:Static icons:Material.Logout}"/>
 
 </ResourceDictionary>

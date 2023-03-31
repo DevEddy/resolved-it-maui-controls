@@ -6,6 +6,14 @@
              x:DataType="viewModels:MainPageViewModel"
              x:Class="Resolved.It.Maui.App.Views.MainPage"
              Title="Main">
+    
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="" 
+                     IconImageSource="{StaticResource LogoutIconImageSource}" 
+                     Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    
     <VerticalStackLayout Spacing="25" Padding="30" >
         <resolvedControls:EnhancedEntry 
             Placeholder="Note"

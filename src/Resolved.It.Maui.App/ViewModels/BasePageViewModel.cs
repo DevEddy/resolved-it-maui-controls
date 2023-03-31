@@ -3,7 +3,7 @@ using Resolved.It.Maui.App.Services;
 
 namespace Resolved.It.Maui.App.ViewModels;
 
-public class BasePageViewModel : ObservableObject
+public class BasePageViewModel : ObservableObject, IQueryAttributable
 {
     private readonly SemaphoreSlim _isBusyLock = new(1, 1);
     
@@ -19,6 +19,11 @@ public class BasePageViewModel : ObservableObject
     public BasePageViewModel(INavigationService navigationService)
     {
         NavigationService = navigationService;
+    }
+    
+    public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        
     }
     
     protected async Task IsBusyFor(Func<Task> unitOfWork)
