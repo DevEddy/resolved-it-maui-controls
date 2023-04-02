@@ -3,7 +3,7 @@
 [![Build Status](https://dev.azure.com/meduardschaefer/Resolved%20IT%20-%20MAUI%20Controls/_apis/build/status/DevEddy.resolved-it-maui-controls?branchName=main)](https://dev.azure.com/meduardschaefer/Resolved%20IT%20-%20MAUI%20Controls/_build/latest?definitionId=3&branchName=main) [![NuGet](https://buildstats.info/nuget/Resolved.It.Maui.Controls?includePreReleases=true)](https://www.nuget.org/packages/Resolved.It.Maui.Controls/)
 
 # Resolved IT - .NET MAUI Controls
-Fully customizable and validatable controls for MAUI.
+Fully customizable and validatable controls and tools for MAUI.
 
 ## Getting Started
 In order to use the Resolved - IT .NET MAUI Controls you need to call the extension method in your `MauiProgram.cs` file as follows:
@@ -73,10 +73,31 @@ Style as you like it:
     </ResourceDictionary>
 </ContentPage.Resources>
 ```
+
 See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/tree/main/src/Resolved.It.Maui.App) as an example.
 
-## Supported input types
+## Features
+### Enhanced Entry
 - Entry, Picker
+
+### Material Icons
+
+```xaml
+xmlns:icons="clr-namespace:Resolved.It.Maui.Controls.Icons;assembly=Resolved.It.Maui.Controls"
+
+<FontImageSource
+    x:Key="LogoutIconImageSource"
+    FontAutoScalingEnabled="True"
+    Size="25"
+    Color="{StaticResource White}"
+    FontFamily="{StaticResource MaterialIconsRegular}"
+    Glyph="{x:Static icons:Material.Logout}" />
+    
+<ToolbarItem 
+    Text="" 
+    IconImageSource="{StaticResource LogoutIconImageSource}" 
+    Command="{Binding LogoutCommand}" />
+```
 
 ## Supported platforms
 All platforms supported by .NET MAUI are supported by this library. 
