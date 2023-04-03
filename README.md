@@ -78,9 +78,10 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 
 ## Features
 ### Enhanced Entry
-- Entry, Picker
+- Entry, Picker, Editor
 
 ### Material Icons
+Use the Material Icons in your App.
 
 ```xaml
 xmlns:icons="clr-namespace:Resolved.It.Maui.Controls.Icons;assembly=Resolved.It.Maui.Controls"
@@ -109,7 +110,7 @@ All platforms supported by .NET MAUI are supported by this library.
 - Tizen: I never tried tizen and not included in the project. If anyone is interested, let me know.
 
 ## Roadmap
-- Support for entry types **Editor** and **DatePicker**
+- Support for entry type **DatePicker**
 - Theme switcher for system, light and dark mode
 
 ## Screenshots
