@@ -34,6 +34,13 @@
             </resolvedControls:EnhancedEntry.MainContent>
         </resolvedControls:EnhancedEntry>
 
+        <resolvedControls:EnhancedEntry 
+            Placeholder="Description"
+            ValidatableObject="{Binding Description}">
+            <resolvedControls:EnhancedEntry.MainContent>
+                <Editor AutoSize="TextChanges" />
+            </resolvedControls:EnhancedEntry.MainContent>
+        </resolvedControls:EnhancedEntry>
 
     </VerticalStackLayout>
 </ContentPage>

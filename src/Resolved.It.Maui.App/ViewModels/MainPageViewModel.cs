@@ -15,6 +15,7 @@ public partial class MainPageViewModel : BasePageViewModel
     public ValidatableValue<string> Note { get; } = new();
     public ValidatableValue<Country> SelectedCountry { get; } = new();
     public ValidatableValue<string> Name { get; } = new();
+    public ValidatableValue<string> Description { get; } = new();
 
     public MainPageViewModel(INavigationService navigationService)
         : base(navigationService)
