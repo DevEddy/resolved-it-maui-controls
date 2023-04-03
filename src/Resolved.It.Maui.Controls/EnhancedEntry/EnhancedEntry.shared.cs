@@ -385,6 +385,10 @@ public partial class EnhancedEntry : Grid
                 newEditor.RemoveBinding(Editor.TextProperty);
                 newEditor.RemoveBinding(Editor.BackgroundColorProperty);
                 newEditor.Placeholder = "";
+
+                if(DeviceInfo.Platform == DevicePlatform.MacCatalyst || DeviceInfo.Platform == DevicePlatform.iOS)
+                    newEditor.Margin = new Thickness(0, 8, 0, 0);
+
                 newEditor.AutoSize = EditorAutoSizeOption.TextChanges;
                 newEditor.BackgroundColor = Colors.Transparent;
                 break;
@@ -409,7 +413,7 @@ public partial class EnhancedEntry : Grid
         if (sender is not Editor editor || editor.Height <= 0)
             return;
 
-        _currentEditorHeight = editor.Height;
+        _currentEditorHeight = editor.Height + editor.Margin.Top;
         UpdateControlsState(editor.IsFocused);
     }
 
