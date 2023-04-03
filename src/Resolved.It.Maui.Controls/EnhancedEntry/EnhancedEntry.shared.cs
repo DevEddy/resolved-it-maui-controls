@@ -184,15 +184,19 @@ public partial class EnhancedEntry : Grid
     }
 
     #endregion Bindable Properties
-    
+
+    private const double DefaultHeight = 44;
+
     private readonly Image _passwordToggleImage = new();
     private readonly Grid _entryFrameContent = new();
     private readonly Frame _entryFrame = new();
     private readonly Label _placeholderLabel = new();
     private readonly Label _errorLabel = new();
-    
+        
     private View? _mainEntryControl;
-    
+    private double _currentEditorHeight;
+    private double heightForPlaceholderCalculation => _currentEditorHeight > 0 ? _currentEditorHeight : DefaultHeight; 
+
     public EnhancedEntry()
     {
         SetupStyle();
@@ -307,6 +311,9 @@ public partial class EnhancedEntry : Grid
             case Entry entry:
                 entry.SetBinding(Entry.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
                 break;
+            case Editor editor:
+                editor.SetBinding(Editor.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
+                break;
         }
 
         Validate();
@@ -336,6 +343,13 @@ public partial class EnhancedEntry : Grid
                     oldEntry.RemoveBinding(Entry.IsPasswordProperty);
                     oldEntry.RemoveBinding(Entry.TextProperty);
                     break;
+                case Editor oldEditor:
+                    oldEditor.TextChanged -= Handle_EntryValueChanged;
+                    oldEditor.Focused -= Handle_EntryFocused;
+                    oldEditor.Unfocused -= Handle_EntryUnfocused;
+                    oldEditor.SizeChanged -= Handle_EditorSizeChanged;
+                    oldEditor.RemoveBinding(Editor.TextProperty);
+                    break;
                 case Picker oldPicker:
                     oldPicker.SelectedIndexChanged -= Handle_PickerSelectedIndexChanged;
                     break;
@@ -347,6 +361,7 @@ public partial class EnhancedEntry : Grid
             return;
 
         _mainEntryControl = newView;
+        
         switch (_mainEntryControl)
         {
             case Entry newEntry:
@@ -359,22 +374,43 @@ public partial class EnhancedEntry : Grid
                 newEntry.Placeholder = "";
                 newEntry.BackgroundColor = Colors.Transparent;
                 newEntry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this, mode: BindingMode.TwoWay));
+                newEntry.HeightRequest = DefaultHeight;
+                break;
+            case Editor newEditor:
+                newEditor.TextChanged += Handle_EntryValueChanged;
+                newEditor.Focused += Handle_EntryFocused;
+                newEditor.Unfocused += Handle_EntryUnfocused;
+                newEditor.SizeChanged += Handle_EditorSizeChanged;
+                newEditor.RemoveBinding(Editor.PlaceholderProperty);
+                newEditor.RemoveBinding(Editor.TextProperty);
+                newEditor.RemoveBinding(Editor.BackgroundColorProperty);
+                newEditor.Placeholder = "";
+                newEditor.AutoSize = EditorAutoSizeOption.TextChanges;
+                newEditor.BackgroundColor = Colors.Transparent;
                 break;
             case Picker picker:
                 picker.SelectedIndexChanged += Handle_PickerSelectedIndexChanged;
                 picker.BackgroundColor = Colors.Transparent;
+                picker.HeightRequest = DefaultHeight;
                 break;
             default:
                 throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
         }
-
         _mainEntryControl.HandlerChanging += NewViewOnHandlerChanging;
         _mainEntryControl.HandlerChanged += NewViewOnHandlerChanged;
         
         Grid.SetColumn(_mainEntryControl, 0);
-        _mainEntryControl.HeightRequest = 44;
         
         _entryFrameContent.Children.Insert(0, _mainEntryControl);
+    }
+
+    private void Handle_EditorSizeChanged(object? sender, EventArgs e)
+    {
+        if (sender is not Editor editor || editor.Height <= 0)
+            return;
+
+        _currentEditorHeight = editor.Height;
+        UpdateControlsState(editor.IsFocused);
     }
 
     private void Handle_PickerSelectedIndexChanged(object? sender, EventArgs e)
@@ -465,7 +501,7 @@ public partial class EnhancedEntry : Grid
         double GetPlaceholderYTranslation()
         {
             if (isFocused || hasValue)
-                return -22;
+                return heightForPlaceholderCalculation / 2 * -1;
 
             return 0;
         }
