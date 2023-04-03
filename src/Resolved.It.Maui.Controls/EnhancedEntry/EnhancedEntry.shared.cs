@@ -195,7 +195,7 @@ public partial class EnhancedEntry : Grid
         
     private View? _mainEntryControl;
     private double _currentEditorHeight;
-    private double heightForPlaceholderCalculation => _currentEditorHeight > 0 ? _currentEditorHeight : DefaultHeight; 
+    private double HeightForPlaceholderCalculation => _currentEditorHeight > 0 ? _currentEditorHeight : DefaultHeight; 
 
     public EnhancedEntry()
     {
@@ -501,7 +501,7 @@ public partial class EnhancedEntry : Grid
         double GetPlaceholderYTranslation()
         {
             if (isFocused || hasValue)
-                return heightForPlaceholderCalculation / 2 * -1;
+                return HeightForPlaceholderCalculation / 2 * -1;
 
             return 0;
         }
