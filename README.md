@@ -5,6 +5,8 @@
 # Resolved IT - .NET MAUI Controls
 Fully customizable and validatable controls and tools for MAUI.
 
+<img src="art/preview.png#1" alt="Resolved IT Controls Preview" width=800 />
+
 ## Getting Started
 In order to use the Resolved - IT .NET MAUI Controls you need to call the extension method in your `MauiProgram.cs` file as follows:
 
@@ -78,7 +80,7 @@ See [Resolved.It.Maui.App](https://github.com/DevEddy/resolved-it-maui-controls/
 
 ## Features
 ### Enhanced Entry
-- Entry, Picker, Editor
+- Entry, Picker, Editor and Date Picker
 
 ### Material Icons
 Use the Material Icons in your App.
@@ -110,19 +112,4 @@ All platforms supported by .NET MAUI are supported by this library.
 - Tizen: I never tried tizen and not included in the project. If anyone is interested, let me know.
 
 ## Roadmap
-- Support for entry type **DatePicker**
 - Theme switcher for system, light and dark mode
-
-## Screenshots
-### Android
-<img src="art/screenshot_android.png#1" alt="Resolved IT + MAUI Logo - Android" width=300 />
-
-### Windows
-<img src="art/screenshot_windows.png#1" alt="Resolved IT + MAUI Logo - Windows" width=300 />
-
-### iOS
-<img src="art/screenshot_ios.png#2" alt="Resolved IT + MAUI Logo - iOS" width=300 />
-
-### MacOS
-<img src="art/screenshot_macos.png#2" alt="Resolved IT + MAUI Logo - MacOS" width=300 />
-
