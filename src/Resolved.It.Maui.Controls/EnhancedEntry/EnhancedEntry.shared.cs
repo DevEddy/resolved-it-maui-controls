@@ -314,6 +314,9 @@ public partial class EnhancedEntry : Grid
             case Editor editor:
                 editor.SetBinding(Editor.TextProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
                 break;
+            case DatePicker datePicker:
+                datePicker.SetBinding(DatePicker.DateProperty, new Binding("Value", source: newValue, mode: BindingMode.TwoWay));
+                break;
         }
 
         Validate();
@@ -351,7 +354,14 @@ public partial class EnhancedEntry : Grid
                     oldEditor.RemoveBinding(Editor.TextProperty);
                     break;
                 case Picker oldPicker:
+                    oldPicker.Focused -= Handle_EntryFocused;
+                    oldPicker.Unfocused -= Handle_EntryUnfocused;
                     oldPicker.SelectedIndexChanged -= Handle_PickerSelectedIndexChanged;
+                    break;
+                case DatePicker oldDatePicker:
+                    oldDatePicker.Focused -= Handle_EntryFocused;
+                    oldDatePicker.Unfocused -= Handle_EntryUnfocused;
+                    oldDatePicker.DateSelected -= Handle_DatePickerDateSelected;
                     break;
             }
             _entryFrameContent.Children.Remove(oldView);
@@ -386,7 +396,7 @@ public partial class EnhancedEntry : Grid
                 newEditor.RemoveBinding(Editor.BackgroundColorProperty);
                 newEditor.Placeholder = "";
 
-                if(DeviceInfo.Platform == DevicePlatform.MacCatalyst || DeviceInfo.Platform == DevicePlatform.iOS)
+                if(DeviceInfo.Platform == DevicePlatform.MacCatalyst || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.WinUI)
                     newEditor.Margin = new Thickness(0, 8, 0, 0);
 
                 newEditor.AutoSize = EditorAutoSizeOption.TextChanges;
@@ -396,6 +406,13 @@ public partial class EnhancedEntry : Grid
                 picker.SelectedIndexChanged += Handle_PickerSelectedIndexChanged;
                 picker.BackgroundColor = Colors.Transparent;
                 picker.HeightRequest = DefaultHeight;
+                break;
+            case DatePicker datePicker:
+                datePicker.Focused += Handle_EntryFocused;
+                datePicker.Unfocused += Handle_EntryUnfocused;
+                datePicker.DateSelected += Handle_DatePickerDateSelected;
+                datePicker.BackgroundColor = Colors.Transparent;
+                datePicker.HeightRequest = DefaultHeight;
                 break;
             default:
                 throw new NotSupportedException($"Content type {_mainEntryControl?.GetType().Name} is not supported yet.");
@@ -432,7 +449,11 @@ public partial class EnhancedEntry : Grid
         
         ValidatableObject?.SetValue(obj);
         Validate();
+    }
 
+    private void Handle_DatePickerDateSelected(object? sender, DateChangedEventArgs e)
+    {
+        Validate();
     }
 
     private void Handle_EntryUnfocused(object? sender, FocusEventArgs e)

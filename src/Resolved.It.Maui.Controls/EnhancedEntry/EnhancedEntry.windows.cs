@@ -38,10 +38,10 @@ public partial class EnhancedEntry
 
     private static void FillWidth(IElementHandler? handler)
     {
-        if (handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox comboBox)
+        if (handler?.PlatformView is not FrameworkElement frameworkElement)
             return;
 
-        comboBox.HorizontalAlignment = HorizontalAlignment.Stretch;
+        frameworkElement.HorizontalAlignment = HorizontalAlignment.Stretch;
     }
     
     private static void OpenDropdown(IElementHandler? handler)
