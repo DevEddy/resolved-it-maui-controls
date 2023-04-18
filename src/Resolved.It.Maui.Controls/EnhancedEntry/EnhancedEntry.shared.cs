@@ -221,6 +221,11 @@ public partial class EnhancedEntry : Grid
 
         _entryFrame.SetBinding(Microsoft.Maui.Controls.Frame.BorderColorProperty, new Binding(nameof(OutlineColor), source: this));
 
+        _entryFrameContent.RowDefinitions = new RowDefinitionCollection()
+        {
+            new() { Height = new GridLength(DefaultHeight) }
+        };
+        
         _entryFrameContent.ColumnDefinitions = new ColumnDefinitionCollection()
         {
             new() { Width = GridLength.Star },
