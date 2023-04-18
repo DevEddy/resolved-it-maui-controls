@@ -14,7 +14,7 @@
                      Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
     
-    <VerticalStackLayout Spacing="25" Padding="30" >
+    <VerticalStackLayout Spacing="20" Padding="30" >
         <resolvedControls:EnhancedEntry 
             Placeholder="Note"
             ValidatableObject="{Binding Note}">

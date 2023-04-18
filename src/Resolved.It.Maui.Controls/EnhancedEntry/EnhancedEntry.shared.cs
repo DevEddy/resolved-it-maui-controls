@@ -211,7 +211,7 @@ public partial class EnhancedEntry : Grid
             new() { Height = GridLength.Auto }
         };
 
-        Margin = 0;
+        Margin = new Thickness(0,4,0,4);
         Padding = 0;
 
         _entryFrame.BackgroundColor = Colors.Transparent;
